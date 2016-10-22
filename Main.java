@@ -8,13 +8,6 @@ public class Main {
   public static boolean colIsFull = false;
   public static void main(String[] args) {
     try {
-      System.out.println();
-      System.out.println();
-      System.out.println();
-      System.out.println("Hi, it's Bored Octopus!");
-      System.out.println();
-      System.out.println();
-      System.out.println();
       //add the potential flags for cmd args
       Options options = new Options();
       options.addOption("b", true, "get the board");
@@ -49,7 +42,7 @@ public class Main {
       int col = rand.nextInt(7); //that random number is our column
       assert(col < 7 && col >= 0);
       System.out.println("Column: " + col);
-
+      
       System.exit(getCol(col, board));
         //if colum is full, increment number
 
