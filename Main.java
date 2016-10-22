@@ -5,7 +5,6 @@ import org.apache.commons.cli.*;
 import java.util.Random;
 
 public class Main {
-  public static boolean colIsFull = false;
   public static void main(String[] args) {
     try {
       //add the potential flags for cmd args
@@ -42,7 +41,9 @@ public class Main {
       int col = rand.nextInt(7); //that random number is our column
       assert(col < 7 && col >= 0);
       System.out.println("Column: " + col);
-      
+      //[row][col]
+      //row is highest at bottom
+
       System.exit(getCol(col, board));
         //if colum is full, increment number
 
@@ -52,18 +53,26 @@ public class Main {
     }
   }
 
+  /** getCol recursively checks for an open column that is not outside of any bounds. 
+  */
   public static int getCol(int column, int[][] boardState) {
-    if(colIsFull){
-      Random rand = new Random();
-      column = rand.nextInt(7);
+    int returnCol = 0;
+    if(column > 6) {
+      column = 0;
     }
-    //loop through rows from bottom to top
-    for(int m = 5; m >= 0 ; m--){
-      if (boardState[column][m] == 0) {
-        return column;
-      }
+    if(boardState[0][column] != 0){
+
+      //pick new number
+      //call recursively
+      return (returnCol = getCol(column + 1, boardState));
     }
-    colIsFull=true;
-    return -1;
+    return column;
+    // //loop through rows from bottom to top
+    // for(int m = 5; m >= 0 ; m--){
+    //   if (boardState[column][m] == 0) {
+    //     return column;
+    //   }
+    // }
+    // return -1;
   }
 }
