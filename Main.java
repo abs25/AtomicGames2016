@@ -5,6 +5,13 @@ import org.apache.commons.cli.*;
 import java.util.Random;
 
 public class Main {
+  final int WIN = 10;
+  final int BLOCKWIN = 5;
+  final int 3INROW = 4;
+  final int BLOCK3 = 3;
+  final int 2INROW = 2;
+  final int BLOCK2 = 1;
+
   public static void main(String[] args) {
     try {
       //add the potential flags for cmd args
@@ -53,7 +60,7 @@ public class Main {
     }
   }
 
-  /** getCol recursively checks for an open column that is not outside of any bounds. 
+  /** getCol recursively checks for an open column that is not outside of any bounds.
   */
   public static int getCol(int column, int[][] boardState) {
     int returnCol = 0;
