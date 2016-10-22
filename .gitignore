@@ -1,3 +1,5 @@
 *.class
 gson-2.7.jar
 readme.txt
+connect-four
+jsonTest/
