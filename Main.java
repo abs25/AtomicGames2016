@@ -3,14 +3,15 @@ import com.google.gson.GsonBuilder;
 import java.util.Arrays;
 import org.apache.commons.cli.*;
 import java.util.Random;
+import java.util.Timer;
 
 public class Main {
-  final int WIN = 10;
-  final int BLOCKWIN = 5;
-  final int 3INROW = 4;
-  final int BLOCK3 = 3;
-  final int 2INROW = 2;
-  final int BLOCK2 = 1;
+  final static int WIN = 10;
+  final static int BLOCKWIN = 5;
+  //  final int 3INROW = 4;
+  //  final int BLOCK3 = 3;
+  //  final int 2INROW = 2;
+  //  final int BLOCK2 = 1;
 
   public static void main(String[] args) {
     try {
@@ -51,8 +52,8 @@ public class Main {
       //[row][col]
       //row is highest at bottom
 
-      System.exit(getCol(col, board));
-        //if colum is full, increment number
+      System.exit(eval(board, playerNum, col));
+      //if colum is full, increment number
 
 
     }catch(Exception e){
@@ -71,15 +72,88 @@ public class Main {
 
       //pick new number
       //call recursively
-      return (returnCol = getCol(column + 1, boardState));
+      return getCol(column + 1, boardState);
     }
     return column;
-    // //loop through rows from bottom to top
-    // for(int m = 5; m >= 0 ; m--){
-    //   if (boardState[column][m] == 0) {
-    //     return column;
-    //   }
-    // }
-    // return -1;
+  }
+
+  // public static int minimax(int[][] boardState, int depth, int playerNum){
+  //   int bestMove =
+  //   eval()
+  //   return minimax(boardState, depth-1, playerNum);
+  //
+  // }
+
+  public static int eval(int[][] boardState, int playerNum, int column){
+
+    //offense
+    //check col for WIN
+    //start at row two col 0
+    for(int row = 2; row >=0; row--){
+      //start at col 0
+      for(int col = 0; col < 6; col++){
+        //if col is less than 6, && if row at col == 0 && if next spot below is ours && if next below that is ours && and if 3rd away is ours
+        //return WIN
+        if((col < 7) && (boardState[row][col] == 0) && (boardState[row+3][col] == playerNum) && (boardState[row+2][col] == playerNum) && (boardState[row+1][col] == playerNum)) {
+          return col;
+        }
+      }
+    }
+
+    //defense
+    for(int row = 2; row >=0; row--){
+      //start at col 0
+      for(int col = 0; col < 6; col++){
+        //if col is less than 6, && if row at col == 0 && if next spot below is ours && if next below that is ours && and if 3rd away is ours
+        //return WIN
+        if((col < 7) && (boardState[row][col] == 0) && ((boardState[row+3][col] != playerNum) && (boardState[row+3][col] != 0))
+                                                    && ((boardState[row+2][col] != playerNum) && (boardState[row+2][col] != 0))
+                                                    && ((boardState[row+1][col] != playerNum) && (boardState[row+1][col] != 0)))
+        {
+          return col;
+        }
+      }
+    }
+
+    //offense two in row
+    for(int row = 3; row >=0; row--){
+      //start at col 0
+      for(int col = 0; col < 6; col++){
+        //if col is less than 6, && if row at col == 0 && if next spot below is ours && if next below that is ours && and if 3rd away is ours
+        //return WIN
+        if((col < 7) && (boardState[row][col] == 0) && (boardState[row+2][col] == playerNum) && (boardState[row+1][col] == playerNum)) {
+          return col;
+        }
+      }
+    }
+
+    //defense two in row
+    for(int row = 3; row >=0; row--){
+      //start at col 0
+      for(int col = 0; col < 6; col++){
+        //if col is less than 6, && if row at col == 0 && if next spot below is ours && if next below that is ours && and if 3rd away is ours
+        //return WIN
+        if((col < 7) && (boardState[row][col] == 0) && ((boardState[row+2][col] != playerNum) && (boardState[row+2][col] != 0))
+                                                    && ((boardState[row+1][col] != playerNum) && (boardState[row+1][col] != 0)))
+
+        {
+          return col;
+        }
+      }
+    }
+
+    //offense one in col
+    for(int row = 4; row >=0; row--){
+      //start at col 0
+      for(int col = 0; col < 6; col++){
+        //if col is less than 6, && if row at col == 0 && if next spot below is ours && if next below that is ours && and if 3rd away is ours
+        //return WIN
+        if((col < 7) && (boardState[row][col] == 0) && (boardState[row+1][col] == playerNum)) {
+          return col;
+        }
+      }
+    }
+    int worstCase = getCol(column, boardState);
+    return worstCase;
   }
 }
